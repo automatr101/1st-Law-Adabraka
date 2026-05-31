@@ -2,6 +2,8 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+
+const ease = [0.22, 1, 0.36, 1] as const;
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
 
 const matters = [
@@ -103,7 +105,7 @@ export default function Contact() {
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
+            transition={{ duration: 0.7, ease, delay: 0.1 }}
           >
             <form className="flex flex-col gap-5" onSubmit={(e) => e.preventDefault()}>
               <div className="grid sm:grid-cols-2 gap-5">

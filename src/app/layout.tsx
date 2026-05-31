@@ -1,19 +1,5 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, DM_Sans } from "next/font/google";
 import "./globals.css";
-
-const cormorant = Cormorant_Garamond({
-  variable: "--font-display",
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  style: ["normal", "italic"],
-});
-
-const dmSans = DM_Sans({
-  variable: "--font-body",
-  subsets: ["latin"],
-  weight: ["300", "400", "500"],
-});
 
 export const metadata: Metadata = {
   title: "1st Law — Legal Excellence, Every Step of the Way",
@@ -27,11 +13,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${cormorant.variable} ${dmSans.variable} h-full`}
-    >
-      <body className="min-h-full bg-brand-black text-brand-white antialiased">
+    <html lang="en" className="h-full">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=DM+Sans:wght@300;400;500&display=swap"
+          rel="stylesheet"
+        />
+      </head>
+      <body className="min-h-full bg-[#0A0A0A] text-[#FAFAFA] antialiased">
         {children}
       </body>
     </html>

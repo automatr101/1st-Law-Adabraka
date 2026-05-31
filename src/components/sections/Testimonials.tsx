@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
+
+const ease = [0.22, 1, 0.36, 1] as const;
 import { motion, AnimatePresence, useInView } from "framer-motion";
 import { useRef } from "react";
 
@@ -66,7 +68,7 @@ export default function Testimonials() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 0.5, ease }}
               className="bg-brand-charcoal p-10 lg:p-14 text-center"
             >
               {/* Gold quote mark */}

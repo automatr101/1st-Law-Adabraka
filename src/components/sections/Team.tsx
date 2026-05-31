@@ -3,6 +3,8 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 
+const ease = [0.22, 1, 0.36, 1] as const;
+
 const attorneys = [
   {
     initials: "KA",
@@ -61,7 +63,7 @@ export default function Team() {
               transition={{
                 delay: i * 0.1,
                 duration: 0.6,
-                ease: [0.22, 1, 0.36, 1],
+                ease,
               }}
               className="group bg-brand-charcoal hover:bg-brand-black transition-colors duration-300 p-8 flex flex-col items-center text-center"
             >

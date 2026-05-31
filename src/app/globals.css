@@ -1,6 +1,15 @@
 @import "tailwindcss";
 
-:root {
+@theme {
+  --color-brand-black: #0A0A0A;
+  --color-brand-dark: #111111;
+  --color-brand-charcoal: #1A1A1A;
+  --color-brand-gold: #C9A84C;
+  --color-brand-gold-light: #E8C97A;
+  --color-brand-cream: #F5F0E8;
+  --color-brand-white: #FAFAFA;
+  --color-brand-muted: #888888;
+
   --font-display: "Cormorant Garamond", Georgia, serif;
   --font-body: "DM Sans", system-ui, sans-serif;
 }

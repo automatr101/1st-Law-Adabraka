@@ -21,8 +21,8 @@ const config: Config = {
         },
       },
       fontFamily: {
-        display: ["var(--font-display)", "Georgia", "serif"],
-        body: ["var(--font-body)", "system-ui", "sans-serif"],
+        display: ['"Cormorant Garamond"', "Georgia", "serif"],
+        body: ['"DM Sans"', "system-ui", "sans-serif"],
       },
     },
   },

@@ -4,6 +4,8 @@ import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
 
+const ease = [0.22, 1, 0.36, 1] as const;
+
 export default function About() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
@@ -16,7 +18,7 @@ export default function About() {
           <motion.div
             initial={{ opacity: 0, x: -40 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.8, ease }}
           >
             <p className="font-body text-brand-gold text-xs tracking-[0.25em] uppercase mb-5">
               Who We Are
@@ -68,7 +70,7 @@ export default function About() {
           <motion.div
             initial={{ opacity: 0, x: 40 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
+            transition={{ duration: 0.8, ease, delay: 0.15 }}
             className="relative"
           >
             <div className="relative bg-brand-charcoal p-10 lg:p-14">
