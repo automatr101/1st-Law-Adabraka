@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     siteName: "1st Law",
     images: [
       {
-        url: "/og-image.svg",
+        url: "/opengraph-image",
         width: 1200,
         height: 630,
         alt: "1st Law — Legal Excellence, Every Step of the Way",
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     title: "1st Law | Adabraka — Legal Excellence, Every Step of the Way",
     description:
       "A relationship-driven multi-practice law firm in Adabraka, Accra, Ghana. Professional legal counsel since 2005.",
-    images: ["/og-image.svg"],
+    images: ["/opengraph-image"],
   },
   icons: {
     icon: [
