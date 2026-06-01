@@ -152,7 +152,7 @@ export default function LexChat() {
               {loading && (
                 <div className="flex justify-start">
                   <div className="w-6 h-6 rounded-full bg-brand-charcoal border border-brand-gold/30 flex items-center justify-center mr-2 mt-1 shrink-0">
-                    <Scale size={11} className="text-brand-gold" strokeWidth={1.5} />
+                    <Bot size={11} className="text-brand-gold" strokeWidth={1.5} />
                   </div>
                   <div className="bg-brand-charcoal rounded-2xl rounded-bl-sm px-4 py-3">
                     <div className="flex gap-1">
