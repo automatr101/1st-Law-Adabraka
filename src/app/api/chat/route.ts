@@ -71,49 +71,74 @@ Clients can book a consultation by:
 Always remind users that your responses are informational only and do not constitute legal advice. For specific legal matters, they should consult directly with 1st Law's attorneys.
 `;
 
+// Triple-redundancy fallback — primary → secondary → tertiary
+const MODELS = [
+  "google/gemini-2.0-flash-exp:free",      // Primary: fast & accurate
+  "meta-llama/llama-3.1-8b-instruct:free", // Secondary: solid fallback
+  "mistralai/mistral-7b-instruct:free",     // Tertiary: robust backup
+];
+
+async function callWithFallback(messages: { role: string; content: string }[], apiKey: string) {
+  let lastError = null;
+
+  for (const model of MODELS) {
+    try {
+      const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${apiKey}`,
+          "Content-Type": "application/json",
+          "HTTP-Referer": "https://1st-law-website.vercel.app",
+          "X-Title": "1st Law - Lex AI Assistant",
+        },
+        body: JSON.stringify({
+          model,
+          messages,
+          max_tokens: 350,
+          temperature: 0.5,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Model ${model} failed with status ${response.status}`);
+      }
+
+      const data = await response.json();
+      const text = data.choices?.[0]?.message?.content;
+      if (text) return text;
+    } catch (err) {
+      console.warn(`Model ${model} failed, trying next. Error:`, err);
+      lastError = err;
+    }
+  }
+
+  throw new Error("All AI models failed.", { cause: lastError });
+}
+
 export async function POST(req: NextRequest) {
   try {
     const { messages } = await req.json();
 
     const apiKey = process.env.OPENROUTER_API_KEY;
     if (!apiKey) {
-      return NextResponse.json({ error: "API key not configured" }, { status: 500 });
+      return NextResponse.json({
+        reply: "I'm not configured yet. Please call us on 0244 124 472 or WhatsApp us for immediate assistance."
+      });
     }
 
-    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${apiKey}`,
-        "Content-Type": "application/json",
-        "HTTP-Referer": "https://1st-law-website.vercel.app",
-        "X-Title": "1st Law - Lex AI Assistant",
-      },
-      body: JSON.stringify({
-        model: "meta-llama/llama-3.1-8b-instruct:free",
-        messages: [
-          { role: "system", content: KNOWLEDGE_BASE },
-          ...messages,
-        ],
-        max_tokens: 500,
-        temperature: 0.7,
-      }),
-    });
+    // Sliding window: last 5 messages only to keep costs low
+    const history = messages.slice(-5);
 
-    if (!response.ok) {
-      const error = await response.text();
-      console.error("OpenRouter error:", error);
-      return NextResponse.json({ error: "Failed to get response" }, { status: 500 });
-    }
-
-    const data = await response.json();
-    const reply = data.choices?.[0]?.message?.content || "I'm sorry, I couldn't process that. Please try again or call us on 0244 124 472.";
+    const reply = await callWithFallback(
+      [{ role: "system", content: KNOWLEDGE_BASE }, ...history],
+      apiKey
+    );
 
     return NextResponse.json({ reply });
   } catch (error) {
     console.error("Chat error:", error);
-    return NextResponse.json(
-      { error: "Something went wrong. Please call us on 0244 124 472." },
-      { status: 500 }
-    );
+    return NextResponse.json({
+      reply: "I'm experiencing high demand right now. Please reach out via WhatsApp or call 0244 124 472 for immediate assistance."
+    });
   }
 }
