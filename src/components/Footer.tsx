@@ -11,11 +11,11 @@ const quickLinks = [
 export default function Footer() {
   return (
     <footer className="bg-brand-black border-t border-brand-gold/10">
-      <div className="max-w-7xl mx-auto px-6 lg:px-12 py-16">
-        <div className="grid md:grid-cols-3 gap-12 mb-12">
+      <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-12 sm:py-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 sm:gap-12 mb-10 sm:mb-12">
           {/* Column 1: Logo + about */}
           <div>
-            <a href="#home" className="flex items-center gap-2 mb-5">
+            <a href="#home" className="flex items-center gap-2 mb-4 sm:mb-5">
               <Scale className="text-brand-gold" size={18} strokeWidth={1.5} />
               <span className="font-display text-xl font-semibold text-brand-gold">
                 1<sup className="text-xs">st</sup> Law
@@ -29,16 +29,13 @@ export default function Footer() {
 
           {/* Column 2: Quick Links */}
           <div>
-            <h4 className="font-body text-xs text-brand-muted tracking-[0.2em] uppercase mb-5">
+            <h4 className="font-body text-xs text-brand-muted tracking-[0.2em] uppercase mb-4 sm:mb-5">
               Quick Links
             </h4>
-            <ul className="flex flex-col gap-3">
+            <ul className="flex flex-col gap-2.5 sm:gap-3">
               {quickLinks.map((link) => (
                 <li key={link.href}>
-                  <a
-                    href={link.href}
-                    className="font-body text-sm text-brand-muted hover:text-brand-gold transition-colors"
-                  >
+                  <a href={link.href} className="font-body text-sm text-brand-muted hover:text-brand-gold transition-colors">
                     {link.label}
                   </a>
                 </li>
@@ -48,31 +45,22 @@ export default function Footer() {
 
           {/* Column 3: Contact */}
           <div>
-            <h4 className="font-body text-xs text-brand-muted tracking-[0.2em] uppercase mb-5">
+            <h4 className="font-body text-xs text-brand-muted tracking-[0.2em] uppercase mb-4 sm:mb-5">
               Contact
             </h4>
-            <address className="not-italic flex flex-col gap-3">
+            <address className="not-italic flex flex-col gap-2.5 sm:gap-3">
               <p className="font-body text-sm text-brand-muted">
-                No. 28, Castle Road
-                <br />
-                Adabraka, Accra, Ghana
+                No. 28, Castle Road<br />Adabraka, Accra, Ghana
               </p>
-              <a
-                href="tel:+233302000000"
-                className="font-body text-sm text-brand-muted hover:text-brand-gold transition-colors"
-              >
-                +233 30 200 0000
+              <a href="tel:+233244124472" className="font-body text-sm text-brand-muted hover:text-brand-gold transition-colors">
+                0244 124 472
               </a>
-              <a
-                href="mailto:info@1stlaw.org"
-                className="font-body text-sm text-brand-muted hover:text-brand-gold transition-colors"
-              >
-                info@1stlaw.org
+              <a href="mailto:firstlawgh@yahoo.com" className="font-body text-sm text-brand-muted hover:text-brand-gold transition-colors">
+                firstlawgh@yahoo.com
               </a>
             </address>
 
-            {/* Social placeholders */}
-            <div className="flex gap-4 mt-6">
+            <div className="flex gap-3 sm:gap-4 mt-5 sm:mt-6">
               {["in", "𝕏", "f"].map((s, i) => (
                 <a
                   key={i}
@@ -87,16 +75,11 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Gold separator */}
-        <div className="w-full h-px bg-brand-gold/10 mb-8" />
+        <div className="w-full h-px bg-brand-gold/10 mb-6 sm:mb-8" />
 
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="font-body text-xs text-brand-muted">
-            © 2025 1st Law. All rights reserved.
-          </p>
-          <p className="font-body text-xs text-brand-muted">
-            www.1stlaw.org
-          </p>
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-2 sm:gap-3">
+          <p className="font-body text-xs text-brand-muted">© 2025 1st Law. All rights reserved.</p>
+          <p className="font-body text-xs text-brand-muted">www.1stlaw.org</p>
         </div>
       </div>
     </footer>
