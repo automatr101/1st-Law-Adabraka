@@ -73,9 +73,9 @@ Always remind users that your responses are informational only and do not consti
 
 // Triple-redundancy fallback — primary → secondary → tertiary
 const MODELS = [
-  "google/gemini-2.0-flash-exp:free",      // Primary: fast & accurate
-  "meta-llama/llama-3.1-8b-instruct:free", // Secondary: solid fallback
-  "mistralai/mistral-7b-instruct:free",     // Tertiary: robust backup
+  "meta-llama/llama-3.1-8b-instruct",  // Primary: fast, solid for chat
+  "google/gemma-3-4b-it",              // Secondary: Google fallback
+  "meta-llama/llama-3.2-3b-instruct",  // Tertiary: lightweight backup
 ];
 
 async function callWithFallback(messages: { role: string; content: string }[], apiKey: string) {
