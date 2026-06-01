@@ -4,7 +4,50 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "1st Law — Legal Excellence, Every Step of the Way",
   description:
-    "1st Law is a dynamic multi-practice law firm in Adabraka, Accra, Ghana. Corporate, litigation, real estate, employment, family, and criminal defense.",
+    "1st Law is a dynamic multi-practice law firm in Adabraka, Accra, Ghana. Specialising in Corporate, Litigation, Real Estate, Employment, Family, and Criminal Defence.",
+  metadataBase: new URL("https://1st-law-website.vercel.app"),
+  openGraph: {
+    title: "1st Law | Adabraka — Legal Excellence, Every Step of the Way",
+    description:
+      "A relationship-driven multi-practice law firm in Adabraka, Accra, Ghana. Professional legal counsel since 2005.",
+    url: "https://1st-law-website.vercel.app",
+    siteName: "1st Law",
+    images: [
+      {
+        url: "/og-image.svg",
+        width: 1200,
+        height: 630,
+        alt: "1st Law — Legal Excellence, Every Step of the Way",
+      },
+    ],
+    locale: "en_GH",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "1st Law | Adabraka — Legal Excellence, Every Step of the Way",
+    description:
+      "A relationship-driven multi-practice law firm in Adabraka, Accra, Ghana. Professional legal counsel since 2005.",
+    images: ["/og-image.svg"],
+  },
+  icons: {
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+    ],
+    shortcut: "/favicon.svg",
+    apple: "/favicon.svg",
+  },
+  keywords: [
+    "law firm Ghana",
+    "lawyer Accra",
+    "legal services Adabraka",
+    "corporate law Ghana",
+    "civil litigation Accra",
+    "real estate lawyer Ghana",
+    "criminal defense Accra",
+    "1st Law",
+    "legal counsel Ghana",
+  ],
 };
 
 export default function RootLayout({
