@@ -7,7 +7,7 @@ const vp = { once: true, margin: "-80px" } as const;
 
 const attorneys = [
   { initials: "KA", photo: "/principal/lawyer-4.jpeg", name: "Kwame Asante", title: "Managing Partner", focus: "Corporate & Commercial Law" },
-  { initials: "AM", photo: null, name: "Abena Mensah", title: "Senior Associate", focus: "Civil Litigation" },
+  { initials: "EA", photo: "/team/ebow-akombeah-sackey.jpeg", name: "Ebow Akombeah Sackey", title: "Associate", focus: "1st Law" },
   { initials: "KD", photo: null, name: "Kofi Darko", title: "Associate", focus: "Real Estate & Property" },
   { initials: "AO", photo: null, name: "Ama Owusu", title: "Corporate Counsel", focus: "Employment & Family Law" },
 ];
