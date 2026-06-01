@@ -10,6 +10,7 @@ import Testimonials from "@/components/sections/Testimonials";
 import Contact from "@/components/sections/Contact";
 import Footer from "@/components/Footer";
 import WhatsAppWidget from "@/components/WhatsAppWidget";
+import LexChat from "@/components/LexChat";
 
 export default function Home() {
   return (
@@ -26,6 +27,7 @@ export default function Home() {
       <Contact />
       <Footer />
       <WhatsAppWidget />
+      <LexChat />
     </>
   );
 }
