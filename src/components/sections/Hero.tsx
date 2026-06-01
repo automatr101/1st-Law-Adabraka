@@ -128,7 +128,7 @@ export default function Hero() {
               </div>
               <div>
                 <p className="font-body text-xs sm:text-sm text-brand-white font-medium">
-                  Trusted by 30,000+ Clients
+                  Trusted by 370+ Clients
                 </p>
                 <div className="flex gap-0.5 mt-0.5">
                   {[...Array(5)].map((_, i) => (

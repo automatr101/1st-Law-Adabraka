@@ -20,6 +20,9 @@ export default function Footer() {
               <span className="font-display text-xl font-semibold text-brand-gold">
                 1<sup className="text-xs">st</sup> Law
               </span>
+              <span className="font-body text-[10px] text-brand-muted/50 tracking-[0.15em] uppercase pl-2 border-l border-brand-gold/20 ml-1">
+                Adabraka
+              </span>
             </a>
             <p className="font-body text-brand-muted text-sm leading-relaxed max-w-xs">
               Legal Excellence, Every Step of the Way. A relationship-driven
@@ -78,7 +81,7 @@ export default function Footer() {
         <div className="w-full h-px bg-brand-gold/10 mb-6 sm:mb-8" />
 
         <div className="flex flex-col sm:flex-row items-center justify-between gap-2 sm:gap-3">
-          <p className="font-body text-xs text-brand-muted">© 2025 1st Law. All rights reserved.</p>
+          <p className="font-body text-xs text-brand-muted">© 2026 1st Law. All rights reserved.</p>
           <p className="font-body text-xs text-brand-muted">www.1stlaw.org</p>
         </div>
       </div>

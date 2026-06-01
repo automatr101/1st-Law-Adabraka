@@ -8,7 +8,7 @@ const vp = { once: true, margin: "-80px" } as const;
 const pillars = [
   { icon: Trophy, title: "Experienced Team", body: "Our attorneys bring decades of combined experience across corporate, litigation, real estate, and criminal practice — trained to navigate Ghana's legal landscape with precision." },
   { icon: UserCheck, title: "Client-First Approach", body: "We believe legal representation begins with listening. Every strategy is built around your specific circumstances, goals, and constraints — not a template." },
-  { icon: TrendingUp, title: "Proven Results", body: "85% client success rate across 650,000+ matters. Our track record speaks plainly: we win, we resolve, and we protect the interests entrusted to us." },
+  { icon: TrendingUp, title: "Proven Results", body: "85% client success rate across 200+ matters. Our track record speaks plainly: we win, we resolve, and we protect the interests entrusted to us." },
 ];
 
 export default function WhyUs() {

@@ -68,6 +68,9 @@ export default function Navbar() {
             <span className="font-display text-2xl font-semibold text-brand-gold tracking-wide">
               1<sup className="text-sm">st</sup> Law
             </span>
+            <span className="hidden sm:block font-body text-xs text-brand-muted/60 tracking-[0.15em] uppercase pl-2 border-l border-brand-gold/20 ml-1">
+              Adabraka
+            </span>
           </a>
 
           {/* Desktop links */}
