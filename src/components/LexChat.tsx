@@ -11,7 +11,7 @@ interface Message {
 
 const WELCOME_MESSAGE: Message = {
   role: "assistant",
-  content: "Hello! I'm **Lex**, the virtual assistant for 1st Law. 👋\n\nI can help you with information about our practice areas, office hours, how to book a consultation, and more.\n\nHow can I assist you today?",
+  content: "Hello! I'm **Lex**, the virtual assistant for 1st Law. 👋\n\nI can help you with our practice areas, office hours, booking a consultation, and more.\n\nHow can I assist you today?",
 };
 
 const QUICK_PROMPTS = [
@@ -22,13 +22,11 @@ const QUICK_PROMPTS = [
 ];
 
 function formatMessage(text: string) {
-  // Bold **text**
   const parts = text.split(/(\*\*[^*]+\*\*)/g);
   return parts.map((part, i) => {
     if (part.startsWith("**") && part.endsWith("**")) {
       return <strong key={i}>{part.slice(2, -2)}</strong>;
     }
-    // Handle line breaks
     return part.split("\n").map((line, j) => (
       <span key={`${i}-${j}`}>
         {line}
@@ -57,7 +55,6 @@ export default function LexChat() {
 
   const sendMessage = async (text: string) => {
     if (!text.trim() || loading) return;
-
     const userMessage: Message = { role: "user", content: text };
     const updatedMessages = [...messages, userMessage];
     setMessages(updatedMessages);
@@ -73,7 +70,6 @@ export default function LexChat() {
           messages: updatedMessages.map((m) => ({ role: m.role, content: m.content })),
         }),
       });
-
       const data = await res.json();
       setMessages((prev) => [
         ...prev,
@@ -82,7 +78,7 @@ export default function LexChat() {
     } catch {
       setMessages((prev) => [
         ...prev,
-        { role: "assistant", content: "I'm having trouble connecting right now. Please call us directly on 0244 124 472 or email firstlawgh@yahoo.com." },
+        { role: "assistant", content: "I'm having trouble connecting. Please call 0244 124 472 or email firstlawgh@yahoo.com." },
       ]);
     } finally {
       setLoading(false);
@@ -91,7 +87,7 @@ export default function LexChat() {
 
   return (
     <>
-      {/* Chat window */}
+      {/* ── Chat Window ── */}
       <AnimatePresence>
         {open && (
           <motion.div
@@ -99,45 +95,38 @@ export default function LexChat() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed bottom-[8.5rem] right-4 sm:right-6 z-50 w-[calc(100vw-2rem)] sm:w-96 flex flex-col shadow-2xl"
-            style={{ maxHeight: "calc(100vh - 120px)" }}
+            className="fixed bottom-[8.5rem] right-4 sm:right-6 z-50 w-[calc(100vw-2rem)] sm:w-[380px] h-[min(70vh,520px)] rounded-xl overflow-hidden shadow-2xl shadow-black/60 flex flex-col border border-brand-gold/20"
           >
-            {/* Header */}
-            <div className="bg-brand-charcoal border border-brand-gold/20 rounded-t-xl px-4 py-3 flex items-center justify-between shrink-0">
+            {/* Header — fixed */}
+            <div className="bg-brand-charcoal px-4 py-3 flex items-center justify-between shrink-0 border-b border-brand-gold/15">
               <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-full bg-brand-black border border-brand-gold/40 flex items-center justify-center">
-                  <Bot size={16} className="text-brand-gold" strokeWidth={1.5} />
+                <div className="w-8 h-8 rounded-full bg-brand-black border border-brand-gold/40 flex items-center justify-center">
+                  <Bot size={14} className="text-brand-gold" strokeWidth={1.5} />
                 </div>
                 <div>
-                  <p className="font-body text-sm font-semibold text-brand-white">Lex</p>
-                  <div className="flex items-center gap-1.5">
+                  <p className="font-body text-sm font-semibold text-brand-white leading-none">Lex</p>
+                  <div className="flex items-center gap-1.5 mt-0.5">
                     <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
-                    <p className="font-body text-[10px] text-brand-muted">1st Law Virtual Assistant</p>
+                    <p className="font-body text-[10px] text-brand-muted leading-none">1st Law AI Assistant</p>
                   </div>
                 </div>
               </div>
-              <button
-                onClick={() => setOpen(false)}
-                className="text-brand-muted hover:text-brand-white transition-colors"
-              >
+              <button onClick={() => setOpen(false)} className="text-brand-muted hover:text-brand-white transition-colors p-1">
                 <ChevronDown size={18} />
               </button>
             </div>
 
-            {/* Messages */}
-            <div className="flex-1 overflow-y-auto bg-brand-black/95 border-x border-brand-gold/20 px-4 py-4 space-y-4 min-h-0">
+            {/* Messages — scrollable middle */}
+            <div className="flex-1 overflow-y-auto bg-brand-black px-4 py-4 space-y-3">
               {messages.map((msg, i) => (
-                <div
-                  key={i}
-                  className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
-                >
+                <div key={i} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
                   {msg.role === "assistant" && (
-                    <div className="w-6 h-6 rounded-full bg-brand-charcoal border border-brand-gold/30 flex items-center justify-center mr-2 mt-1 shrink-0">
-                      <Bot size={11} className="text-brand-gold" strokeWidth={1.5} />
+                    <div className="w-6 h-6 rounded-full bg-brand-charcoal border border-brand-gold/30 flex items-center justify-center mr-2 mt-0.5 shrink-0">
+                      <Bot size={10} className="text-brand-gold" strokeWidth={1.5} />
                     </div>
                   )}
                   <div
-                    className={`max-w-[80%] px-3 py-2.5 text-sm font-body leading-relaxed ${
+                    className={`max-w-[78%] px-3 py-2 text-[13px] font-body leading-relaxed ${
                       msg.role === "user"
                         ? "bg-brand-gold text-brand-black rounded-2xl rounded-br-sm"
                         : "bg-brand-charcoal text-brand-cream rounded-2xl rounded-bl-sm"
@@ -148,20 +137,16 @@ export default function LexChat() {
                 </div>
               ))}
 
-              {/* Typing indicator */}
+              {/* Typing dots */}
               {loading && (
                 <div className="flex justify-start">
-                  <div className="w-6 h-6 rounded-full bg-brand-charcoal border border-brand-gold/30 flex items-center justify-center mr-2 mt-1 shrink-0">
-                    <Bot size={11} className="text-brand-gold" strokeWidth={1.5} />
+                  <div className="w-6 h-6 rounded-full bg-brand-charcoal border border-brand-gold/30 flex items-center justify-center mr-2 mt-0.5 shrink-0">
+                    <Bot size={10} className="text-brand-gold" strokeWidth={1.5} />
                   </div>
-                  <div className="bg-brand-charcoal rounded-2xl rounded-bl-sm px-4 py-3">
+                  <div className="bg-brand-charcoal rounded-2xl rounded-bl-sm px-4 py-2.5">
                     <div className="flex gap-1">
                       {[0, 1, 2].map((i) => (
-                        <span
-                          key={i}
-                          className="w-1.5 h-1.5 rounded-full bg-brand-gold/60 animate-bounce"
-                          style={{ animationDelay: `${i * 0.15}s` }}
-                        />
+                        <span key={i} className="w-1.5 h-1.5 rounded-full bg-brand-gold/50 animate-bounce" style={{ animationDelay: `${i * 0.15}s` }} />
                       ))}
                     </div>
                   </div>
@@ -170,12 +155,12 @@ export default function LexChat() {
 
               {/* Quick prompts */}
               {showQuickPrompts && messages.length === 1 && (
-                <div className="flex flex-wrap gap-2 mt-2">
+                <div className="flex flex-wrap gap-1.5 pt-1">
                   {QUICK_PROMPTS.map((prompt) => (
                     <button
                       key={prompt}
                       onClick={() => sendMessage(prompt)}
-                      className="font-body text-xs text-brand-gold border border-brand-gold/30 px-3 py-1.5 rounded-full hover:bg-brand-gold/10 transition-colors"
+                      className="font-body text-[11px] text-brand-gold border border-brand-gold/25 px-2.5 py-1 rounded-full hover:bg-brand-gold/10 transition-colors"
                     >
                       {prompt}
                     </button>
@@ -186,20 +171,19 @@ export default function LexChat() {
               <div ref={bottomRef} />
             </div>
 
-            {/* Book Consultation CTA */}
-            <div className="bg-brand-charcoal/80 border-x border-brand-gold/20 px-4 py-2 shrink-0">
+            {/* Book Consultation — fixed */}
+            <div className="bg-brand-charcoal/90 border-t border-brand-gold/10 px-3 py-2 shrink-0">
               <a
                 href="#contact"
                 onClick={() => setOpen(false)}
-                className="w-full flex items-center justify-center gap-2 bg-brand-gold text-brand-black font-body font-medium text-xs px-4 py-2.5 hover:bg-brand-gold-light transition-colors tracking-wide"
+                className="w-full flex items-center justify-center gap-2 bg-brand-gold text-brand-black font-body font-medium text-xs py-2 hover:bg-brand-gold-light transition-colors tracking-wide"
               >
-                <Bot size={13} strokeWidth={2} />
                 Book a Consultation
               </a>
             </div>
 
-            {/* Input */}
-            <div className="bg-brand-charcoal border border-brand-gold/20 rounded-b-xl px-3 py-3 flex gap-2 shrink-0">
+            {/* Input — fixed bottom */}
+            <div className="bg-brand-dark border-t border-brand-gold/15 px-3 py-2.5 flex gap-2 shrink-0">
               <input
                 ref={inputRef}
                 type="text"
@@ -207,21 +191,21 @@ export default function LexChat() {
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && sendMessage(input)}
                 placeholder="Ask Lex anything..."
-                className="flex-1 bg-brand-black/60 border border-brand-gold/10 focus:border-brand-gold/40 text-brand-white font-body text-sm px-3 py-2 outline-none placeholder:text-brand-muted/40 rounded"
+                className="flex-1 bg-brand-black border border-brand-gold/10 focus:border-brand-gold/30 text-brand-white font-body text-[13px] px-3 py-2 outline-none placeholder:text-brand-muted/40 rounded"
               />
               <button
                 onClick={() => sendMessage(input)}
                 disabled={!input.trim() || loading}
-                className="w-9 h-9 flex items-center justify-center bg-brand-gold text-brand-black hover:bg-brand-gold-light transition-colors disabled:opacity-40 disabled:cursor-not-allowed rounded"
+                className="w-8 h-8 flex items-center justify-center bg-brand-gold text-brand-black hover:bg-brand-gold-light transition-colors disabled:opacity-30 disabled:cursor-not-allowed rounded shrink-0"
               >
-                <Send size={14} strokeWidth={2} />
+                <Send size={13} strokeWidth={2} />
               </button>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Floating round button — sits above WhatsApp widget */}
+      {/* ── Floating Button ── */}
       <motion.button
         onClick={() => setOpen((v) => !v)}
         whileHover={{ scale: 1.08 }}
@@ -231,28 +215,15 @@ export default function LexChat() {
       >
         <AnimatePresence mode="wait">
           {open ? (
-            <motion.span
-              key="close"
-              initial={{ rotate: -90, opacity: 0 }}
-              animate={{ rotate: 0, opacity: 1 }}
-              exit={{ rotate: 90, opacity: 0 }}
-              transition={{ duration: 0.2 }}
-            >
+            <motion.span key="close" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.2 }}>
               <X size={20} className="text-brand-gold" />
             </motion.span>
           ) : (
-            <motion.span
-              key="bot"
-              initial={{ rotate: 90, opacity: 0 }}
-              animate={{ rotate: 0, opacity: 1 }}
-              exit={{ rotate: -90, opacity: 0 }}
-              transition={{ duration: 0.2 }}
-            >
+            <motion.span key="bot" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.2 }}>
               <Bot size={22} className="text-brand-gold" strokeWidth={1.5} />
             </motion.span>
           )}
         </AnimatePresence>
-        {/* Green online pulse */}
         {!open && (
           <span className="absolute top-0.5 right-0.5 w-3 h-3 rounded-full bg-green-400 border-2 border-brand-charcoal" />
         )}
