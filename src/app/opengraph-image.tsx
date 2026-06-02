@@ -114,48 +114,15 @@ export default function OGImage() {
             </div>
           </div>
 
-          {/* Firm name */}
-          <div
-            style={{
-              display: "flex",
-              alignItems: "baseline",
-              marginBottom: "20px",
-            }}
-          >
-            <span
-              style={{
-                fontSize: "96px",
-                fontWeight: "400",
-                color: "#C9A84C",
-                lineHeight: 1,
-                letterSpacing: "2px",
-              }}
-            >
-              1
-            </span>
-            <span
-              style={{
-                fontSize: "48px",
-                fontWeight: "400",
-                color: "#C9A84C",
-                marginTop: "-30px",
-              }}
-            >
-              st
-            </span>
-            <span
-              style={{
-                fontSize: "96px",
-                fontWeight: "400",
-                color: "#C9A84C",
-                lineHeight: 1,
-                letterSpacing: "4px",
-                marginLeft: "8px",
-              }}
-            >
-              Law
-            </span>
-          </div>
+          {/* Official logo */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="https://1st-law-website.vercel.app/logo.png"
+            alt="1st Law"
+            width={340}
+            height={270}
+            style={{ marginBottom: "16px", objectFit: "contain" }}
+          />
 
           {/* Gold divider */}
           <div

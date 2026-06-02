@@ -1,4 +1,4 @@
-import { Scale } from "lucide-react";
+import Logo from "@/components/Logo";
 
 const quickLinks = [
   { href: "#home", label: "Home" },
@@ -15,14 +15,8 @@ export default function Footer() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 sm:gap-12 mb-10 sm:mb-12">
           {/* Column 1: Logo + about */}
           <div>
-            <a href="#home" className="flex items-center gap-2 mb-4 sm:mb-5">
-              <Scale className="text-brand-gold" size={18} strokeWidth={1.5} />
-              <span className="font-display text-xl font-semibold text-brand-gold">
-                1<sup className="text-xs">st</sup> Law
-              </span>
-              <span className="font-body text-[10px] text-brand-muted/50 tracking-[0.15em] uppercase pl-2 border-l border-brand-gold/20 ml-1">
-                Adabraka
-              </span>
+            <a href="#home" className="inline-flex mb-5 sm:mb-6">
+              <Logo variant="full" className="h-24 sm:h-28 w-auto" />
             </a>
             <p className="font-body text-brand-muted text-sm leading-relaxed max-w-xs">
               Legal Excellence, Every Step of the Way. A relationship-driven

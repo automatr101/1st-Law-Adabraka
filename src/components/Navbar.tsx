@@ -2,8 +2,9 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Scale, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import clsx from "clsx";
+import Logo from "@/components/Logo";
 
 const navLinks = [
   { href: "#home", label: "Home", section: "home" },
@@ -59,16 +60,9 @@ export default function Navbar() {
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-12 flex items-center justify-between h-20">
           {/* Logo */}
-          <a href="#home" className="flex items-center gap-2.5 group">
-            <Scale
-              className="text-brand-gold group-hover:rotate-12 transition-transform duration-300"
-              size={22}
-              strokeWidth={1.5}
-            />
-            <span className="font-display text-2xl font-semibold text-brand-gold tracking-wide">
-              1<sup className="text-sm">st</sup> Law
-            </span>
-            <span className="hidden sm:block font-body text-xs text-brand-muted/60 tracking-[0.15em] uppercase pl-2 border-l border-brand-gold/20 ml-1">
+          <a href="#home" className="flex items-center gap-3 group">
+            <Logo variant="compact" className="h-9 sm:h-11 w-auto group-hover:opacity-90 transition-opacity" />
+            <span className="hidden sm:block font-body text-xs text-brand-muted/60 tracking-[0.15em] uppercase pl-3 border-l border-brand-gold/20">
               Adabraka
             </span>
           </a>
