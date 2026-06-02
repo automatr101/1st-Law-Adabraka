@@ -30,13 +30,6 @@ export const metadata: Metadata = {
       "A relationship-driven multi-practice law firm in Adabraka, Accra, Ghana. Professional legal counsel since 2005.",
     images: ["/opengraph-image"],
   },
-  icons: {
-    icon: [
-      { url: "/favicon.svg", type: "image/svg+xml" },
-    ],
-    shortcut: "/favicon.svg",
-    apple: "/favicon.svg",
-  },
   keywords: [
     "law firm Ghana",
     "lawyer Accra",
