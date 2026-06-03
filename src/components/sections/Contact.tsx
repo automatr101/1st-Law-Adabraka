@@ -9,6 +9,10 @@ const vp = { once: true, margin: "-80px" } as const;
 
 const matters = ["Corporate & Commercial Law", "Civil Litigation", "Real Estate & Property", "Employment Law", "Family Law", "Criminal Defense", "Other"];
 
+// Web3Forms access key is public & safe for client-side use (per their docs).
+// Client-side call avoids Cloudflare's server-side bot challenge.
+const WEB3FORMS_KEY = "9fad7e64-3a8c-4dd4-b2d6-6463e750d283";
+
 type Status = "idle" | "sending" | "success" | "error";
 
 export default function Contact() {
@@ -26,18 +30,36 @@ export default function Contact() {
     setErrorMsg("");
 
     try {
-      const res = await fetch("/api/contact", {
+      // 1. Email via Web3Forms (client-side — sails past Cloudflare)
+      const emailRes = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_KEY,
+          subject: `New Consultation Request — ${form.name}`,
+          from_name: "1st Law Website",
+          Name: form.name,
+          Phone: form.phone || "Not provided",
+          Email: form.email || "Not provided",
+          "Legal Matter": form.matter || "Not specified",
+          Message: form.message,
+        }),
+      });
+      const emailData = await emailRes.json();
+
+      // 2. WhatsApp ping (server-side, best-effort — don't block on it)
+      fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
-      });
-      const data = await res.json();
-      if (data.ok) {
+      }).catch(() => {});
+
+      if (emailData.success) {
         setStatus("success");
         setForm({ name: "", phone: "", email: "", matter: "", message: "" });
       } else {
         setStatus("error");
-        setErrorMsg(data.error || "Something went wrong. Please call 0244 124 472.");
+        setErrorMsg("Something went wrong. Please call 0244 124 472 or email firstlawgh@yahoo.com.");
       }
     } catch {
       setStatus("error");

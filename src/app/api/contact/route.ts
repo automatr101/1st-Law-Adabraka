@@ -20,34 +20,11 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const results: { email: boolean; whatsapp: boolean } = { email: false, whatsapp: false };
+    // Email is sent client-side via Web3Forms (its key is public & browser-safe;
+    // server-side calls get blocked by Cloudflare). This route handles WhatsApp.
+    const results: { whatsapp: boolean } = { whatsapp: false };
 
-    // ── 1. Email via Web3Forms ──
-    const web3Key = process.env.WEB3FORMS_ACCESS_KEY;
-    if (web3Key) {
-      try {
-        const res = await fetch("https://api.web3forms.com/submit", {
-          method: "POST",
-          headers: { "Content-Type": "application/json", Accept: "application/json" },
-          body: JSON.stringify({
-            access_key: web3Key,
-            subject: `New Consultation Request — ${name}`,
-            from_name: "1st Law Website",
-            // fields
-            Name: name,
-            Phone: phone || "Not provided",
-            Email: email || "Not provided",
-            "Legal Matter": matter || "Not specified",
-            Message: message,
-          }),
-        });
-        results.email = res.ok;
-      } catch (e) {
-        console.error("Web3Forms error:", e);
-      }
-    }
-
-    // ── 2. WhatsApp via CallMeBot ──
+    // ── WhatsApp via CallMeBot ──
     const cmbPhone = process.env.CALLMEBOT_PHONE;
     const cmbKey = process.env.CALLMEBOT_APIKEY;
     if (cmbPhone && cmbKey) {
@@ -75,19 +52,9 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // Success if at least one channel delivered
-    if (results.email || results.whatsapp) {
-      return NextResponse.json({ ok: true, results });
-    }
-
-    return NextResponse.json(
-      {
-        ok: false,
-        error:
-          "We couldn't send your message right now. Please call 0244 124 472 or email firstlawgh@yahoo.com.",
-      },
-      { status: 502 }
-    );
+    // Always return ok — email is the primary channel (sent client-side).
+    // WhatsApp is a best-effort bonus notification.
+    return NextResponse.json({ ok: true, results });
   } catch (error) {
     console.error("Contact route error:", error);
     return NextResponse.json(
