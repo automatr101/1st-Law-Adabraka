@@ -1,14 +1,53 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { MapPin, Phone, Mail, Clock } from "lucide-react";
+import { MapPin, Phone, Mail, Clock, CheckCircle2, Loader2 } from "lucide-react";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 const vp = { once: true, margin: "-80px" } as const;
 
 const matters = ["Corporate & Commercial Law", "Civil Litigation", "Real Estate & Property", "Employment Law", "Family Law", "Criminal Defense", "Other"];
 
+type Status = "idle" | "sending" | "success" | "error";
+
 export default function Contact() {
+  const [form, setForm] = useState({ name: "", phone: "", email: "", matter: "", message: "" });
+  const [status, setStatus] = useState<Status>("idle");
+  const [errorMsg, setErrorMsg] = useState("");
+
+  const update = (field: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) =>
+    setForm((f) => ({ ...f, [field]: e.target.value }));
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (status === "sending") return;
+    setStatus("sending");
+    setErrorMsg("");
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      const data = await res.json();
+      if (data.ok) {
+        setStatus("success");
+        setForm({ name: "", phone: "", email: "", matter: "", message: "" });
+      } else {
+        setStatus("error");
+        setErrorMsg(data.error || "Something went wrong. Please call 0244 124 472.");
+      }
+    } catch {
+      setStatus("error");
+      setErrorMsg("Network error. Please call 0244 124 472 or email firstlawgh@yahoo.com.");
+    }
+  };
+
+  const inputCls =
+    "bg-brand-charcoal border border-brand-gold/10 focus:border-brand-gold/40 text-brand-white font-body text-sm px-4 py-3 outline-none transition-colors placeholder:text-brand-muted/40";
+
   return (
     <section id="contact" className="py-16 sm:py-24 lg:py-36 bg-brand-dark">
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
@@ -66,36 +105,68 @@ export default function Contact() {
             viewport={vp}
             transition={{ duration: 0.7, ease, delay: 0.1 }}
           >
-            <form className="flex flex-col gap-4 sm:gap-5" onSubmit={(e) => e.preventDefault()}>
-              <div className="grid sm:grid-cols-2 gap-4 sm:gap-5">
-                <div className="flex flex-col gap-1.5">
-                  <label className="font-body text-xs text-brand-muted tracking-wide uppercase">Full Name</label>
-                  <input type="text" placeholder="John Mensah" className="bg-brand-charcoal border border-brand-gold/10 focus:border-brand-gold/40 text-brand-white font-body text-sm px-4 py-3 outline-none transition-colors placeholder:text-brand-muted/40" />
+            {status === "success" ? (
+              <div className="flex flex-col items-center justify-center text-center h-full min-h-[400px] bg-brand-charcoal/50 px-6 py-12">
+                <CheckCircle2 className="text-brand-gold mb-5" size={48} strokeWidth={1.5} />
+                <h3 className="font-display text-2xl font-light text-brand-white mb-3">Message received</h3>
+                <p className="font-body text-brand-muted text-sm leading-relaxed max-w-sm mb-6">
+                  Thank you for reaching out to 1st Law. Our team will respond within 24 hours. For urgent matters, call <a href="tel:+233244124472" className="text-brand-gold">0244 124 472</a>.
+                </p>
+                <button
+                  onClick={() => setStatus("idle")}
+                  className="font-body text-sm text-brand-gold border border-brand-gold/40 px-6 py-2.5 hover:bg-brand-gold hover:text-brand-black transition-all tracking-wide"
+                >
+                  Send Another Message
+                </button>
+              </div>
+            ) : (
+              <form className="flex flex-col gap-4 sm:gap-5" onSubmit={handleSubmit}>
+                <div className="grid sm:grid-cols-2 gap-4 sm:gap-5">
+                  <div className="flex flex-col gap-1.5">
+                    <label className="font-body text-xs text-brand-muted tracking-wide uppercase">Full Name *</label>
+                    <input required value={form.name} onChange={update("name")} type="text" placeholder="John Mensah" className={inputCls} />
+                  </div>
+                  <div className="flex flex-col gap-1.5">
+                    <label className="font-body text-xs text-brand-muted tracking-wide uppercase">Phone</label>
+                    <input value={form.phone} onChange={update("phone")} type="tel" placeholder="+233 00 000 0000" className={inputCls} />
+                  </div>
                 </div>
                 <div className="flex flex-col gap-1.5">
-                  <label className="font-body text-xs text-brand-muted tracking-wide uppercase">Phone</label>
-                  <input type="tel" placeholder="+233 00 000 0000" className="bg-brand-charcoal border border-brand-gold/10 focus:border-brand-gold/40 text-brand-white font-body text-sm px-4 py-3 outline-none transition-colors placeholder:text-brand-muted/40" />
+                  <label className="font-body text-xs text-brand-muted tracking-wide uppercase">Email Address</label>
+                  <input value={form.email} onChange={update("email")} type="email" placeholder="you@example.com" className={inputCls} />
                 </div>
-              </div>
-              <div className="flex flex-col gap-1.5">
-                <label className="font-body text-xs text-brand-muted tracking-wide uppercase">Email Address</label>
-                <input type="email" placeholder="you@example.com" className="bg-brand-charcoal border border-brand-gold/10 focus:border-brand-gold/40 text-brand-white font-body text-sm px-4 py-3 outline-none transition-colors placeholder:text-brand-muted/40" />
-              </div>
-              <div className="flex flex-col gap-1.5">
-                <label className="font-body text-xs text-brand-muted tracking-wide uppercase">Legal Matter</label>
-                <select className="bg-brand-charcoal border border-brand-gold/10 focus:border-brand-gold/40 text-brand-white font-body text-sm px-4 py-3 outline-none transition-colors appearance-none cursor-pointer">
-                  <option value="">Select area of law</option>
-                  {matters.map((m) => <option key={m} value={m}>{m}</option>)}
-                </select>
-              </div>
-              <div className="flex flex-col gap-1.5">
-                <label className="font-body text-xs text-brand-muted tracking-wide uppercase">Message</label>
-                <textarea rows={5} placeholder="Briefly describe your legal matter..." className="bg-brand-charcoal border border-brand-gold/10 focus:border-brand-gold/40 text-brand-white font-body text-sm px-4 py-3 outline-none transition-colors resize-none placeholder:text-brand-muted/40" />
-              </div>
-              <button type="submit" className="mt-2 bg-brand-gold text-brand-black font-body font-medium text-sm px-8 py-4 hover:bg-brand-gold-light transition-colors duration-300 tracking-wide w-full sm:w-auto sm:self-start">
-                Send Message →
-              </button>
-            </form>
+                <div className="flex flex-col gap-1.5">
+                  <label className="font-body text-xs text-brand-muted tracking-wide uppercase">Legal Matter</label>
+                  <select value={form.matter} onChange={update("matter")} className={`${inputCls} appearance-none cursor-pointer`}>
+                    <option value="">Select area of law</option>
+                    {matters.map((m) => <option key={m} value={m}>{m}</option>)}
+                  </select>
+                </div>
+                <div className="flex flex-col gap-1.5">
+                  <label className="font-body text-xs text-brand-muted tracking-wide uppercase">Message *</label>
+                  <textarea required value={form.message} onChange={update("message")} rows={5} placeholder="Briefly describe your legal matter..." className={`${inputCls} resize-none`} />
+                </div>
+
+                {status === "error" && (
+                  <p className="font-body text-sm text-red-400/90 bg-red-950/30 px-4 py-3">{errorMsg}</p>
+                )}
+
+                <button
+                  type="submit"
+                  disabled={status === "sending"}
+                  className="mt-2 inline-flex items-center justify-center gap-2 bg-brand-gold text-brand-black font-body font-medium text-sm px-8 py-4 hover:bg-brand-gold-light transition-colors duration-300 tracking-wide w-full sm:w-auto sm:self-start disabled:opacity-60 disabled:cursor-not-allowed"
+                >
+                  {status === "sending" ? (
+                    <>
+                      <Loader2 size={15} className="animate-spin" />
+                      Sending...
+                    </>
+                  ) : (
+                    "Send Message →"
+                  )}
+                </button>
+              </form>
+            )}
           </motion.div>
         </div>
       </div>
