@@ -26,6 +26,14 @@ export default function Contact() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (status === "sending") return;
+
+    // All fields are required
+    if (!form.name.trim() || !form.phone.trim() || !form.email.trim() || !form.matter.trim() || !form.message.trim()) {
+      setStatus("error");
+      setErrorMsg("Please fill in all fields before sending.");
+      return;
+    }
+
     setStatus("sending");
     setErrorMsg("");
 
@@ -149,18 +157,18 @@ export default function Contact() {
                     <input required value={form.name} onChange={update("name")} type="text" placeholder="John Mensah" className={inputCls} />
                   </div>
                   <div className="flex flex-col gap-1.5">
-                    <label className="font-body text-xs text-brand-muted tracking-wide uppercase">Phone</label>
-                    <input value={form.phone} onChange={update("phone")} type="tel" placeholder="+233 00 000 0000" className={inputCls} />
+                    <label className="font-body text-xs text-brand-muted tracking-wide uppercase">Phone *</label>
+                    <input required value={form.phone} onChange={update("phone")} type="tel" placeholder="+233 00 000 0000" className={inputCls} />
                   </div>
                 </div>
                 <div className="flex flex-col gap-1.5">
-                  <label className="font-body text-xs text-brand-muted tracking-wide uppercase">Email Address</label>
-                  <input value={form.email} onChange={update("email")} type="email" placeholder="you@example.com" className={inputCls} />
+                  <label className="font-body text-xs text-brand-muted tracking-wide uppercase">Email Address *</label>
+                  <input required value={form.email} onChange={update("email")} type="email" placeholder="you@example.com" className={inputCls} />
                 </div>
                 <div className="flex flex-col gap-1.5">
-                  <label className="font-body text-xs text-brand-muted tracking-wide uppercase">Legal Matter</label>
-                  <select value={form.matter} onChange={update("matter")} className={`${inputCls} appearance-none cursor-pointer`}>
-                    <option value="">Select area of law</option>
+                  <label className="font-body text-xs text-brand-muted tracking-wide uppercase">Legal Matter *</label>
+                  <select required value={form.matter} onChange={update("matter")} className={`${inputCls} appearance-none cursor-pointer`}>
+                    <option value="" disabled>Select area of law</option>
                     {matters.map((m) => <option key={m} value={m}>{m}</option>)}
                   </select>
                 </div>
