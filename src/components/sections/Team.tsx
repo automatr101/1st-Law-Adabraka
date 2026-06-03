@@ -9,7 +9,7 @@ const attorneys = [
   { initials: "KA", photo: "/principal/lawyer-4.jpeg", name: "Kwame Asante", title: "Managing Partner", focus: "Corporate & Commercial Law" },
   { initials: "EA", photo: "/team/ebow-akombeah-sackey.jpeg", name: "Ebow Akombeah Sackey", title: "Associate", focus: "1st Law" },
   { initials: "VC", photo: "/team/victoria-crentsil.jpeg", name: "Victoria Crentsil", title: "Associate", focus: "1st Law" },
-  { initials: "AO", photo: null, name: "Ama Owusu", title: "Corporate Counsel", focus: "Employment & Family Law" },
+  { initials: "JB", photo: "/team/james-bamfo.jpeg", name: "James Bamfo", title: "Staff Member", focus: "1st Law" },
 ];
 
 export default function Team() {
