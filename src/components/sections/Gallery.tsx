@@ -9,15 +9,20 @@ const vp = { once: true, margin: "-60px" } as const;
 
 // Curated firm moments — lead counsel, associates, team.
 const photos = [
-  { src: "/principal/lawyer-1.jpeg", alt: "Lead Counsel in court robes", span: "row-span-2" },
-  { src: "/principal/lawyer-8.jpeg", alt: "Legal commentary on national television", span: "" },
-  { src: "/gallery/george-1.jpeg", alt: "George Adusei Sarpong, Associate", span: "row-span-2" },
-  { src: "/principal/lawyer-9.jpeg", alt: "1st Law team at the Law Court Complex", span: "" },
-  { src: "/team/team-group.jpeg", alt: "The 1st Law team", span: "col-span-2" },
-  { src: "/principal/lawyer-2.jpeg", alt: "Lead Counsel, robed and ready", span: "row-span-2" },
-  { src: "/principal/lawyer-5.jpeg", alt: "1st Law counsel with a client", span: "" },
-  { src: "/gallery/george-2.jpeg", alt: "George Adusei Sarpong at chambers", span: "" },
-  { src: "/principal/lawyer-7.jpeg", alt: "Lead Counsel on the court steps", span: "" },
+  { src: "/gallery/g01.jpeg", alt: "Lead Counsel at the Law Court Complex", span: "row-span-2", pos: "object-top" },
+  { src: "/gallery/g08.jpeg", alt: "Legal commentary on national television", span: "", pos: "object-top" },
+  { src: "/gallery/g11.jpeg", alt: "James Bamfo, Staff Member", span: "", pos: "object-top" },
+  { src: "/gallery/g12.jpeg", alt: "Victoria Crentsil, Associate", span: "row-span-2", pos: "object-top" },
+  { src: "/gallery/g10.jpeg", alt: "The 1st Law team", span: "col-span-2", pos: "object-center" },
+  { src: "/gallery/g02.jpeg", alt: "Robed and ready for the bar", span: "row-span-2", pos: "object-top" },
+  { src: "/gallery/g05.jpeg", alt: "Engaging with the Ghana Police Service", span: "", pos: "object-top" },
+  { src: "/gallery/g06.jpeg", alt: "Mentoring the next generation of counsel", span: "", pos: "object-top" },
+  { src: "/gallery/g09.jpeg", alt: "1st Law counsel outside the Law Court Complex", span: "row-span-2", pos: "object-top" },
+  { src: "/gallery/g13.jpeg", alt: "George Adusei Sarpong, Associate", span: "", pos: "object-top" },
+  { src: "/gallery/g14.jpeg", alt: "George Adusei Sarpong at chambers", span: "col-span-2", pos: "object-center" },
+  { src: "/gallery/g03.jpeg", alt: "Lead Counsel", span: "", pos: "object-top" },
+  { src: "/gallery/g04.jpeg", alt: "At chambers", span: "row-span-2", pos: "object-top" },
+  { src: "/gallery/g07.jpeg", alt: "On the court steps", span: "", pos: "object-top" },
 ];
 
 export default function Gallery() {
@@ -66,7 +71,7 @@ export default function Gallery() {
         </motion.div>
 
         {/* Masonry grid */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 auto-rows-[180px] sm:auto-rows-[220px] lg:auto-rows-[200px] gap-3 sm:gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-4 grid-flow-row-dense auto-rows-[180px] sm:auto-rows-[220px] lg:auto-rows-[200px] gap-3 sm:gap-4">
           {photos.map((photo, i) => (
             <motion.button
               key={photo.src}
@@ -83,7 +88,7 @@ export default function Gallery() {
                 src={photo.src}
                 alt={photo.alt}
                 loading="lazy"
-                className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                className={`w-full h-full object-cover ${photo.pos} transition-transform duration-700 group-hover:scale-105`}
               />
               {/* Hover overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-brand-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
