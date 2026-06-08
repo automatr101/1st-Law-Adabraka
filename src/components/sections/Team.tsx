@@ -9,6 +9,7 @@ const attorneys = [
   { initials: "KA", photo: "/principal/lawyer-4.jpeg", name: "Kwame Asante", title: "Managing Partner", focus: "Corporate & Commercial Law" },
   { initials: "EA", photo: "/team/ebow-akombeah-sackey.jpeg", name: "Ebow Akombeah Sackey", title: "Associate", focus: "1st Law" },
   { initials: "VC", photo: "/team/victoria-crentsil.jpeg", name: "Victoria Crentsil", title: "Associate", focus: "1st Law" },
+  { initials: "GA", photo: "/team/george-adusei-sarpong.jpeg", name: "George Adusei Sarpong", title: "Associate", focus: "1st Law" },
   { initials: "JB", photo: "/team/james-bamfo.jpeg", name: "James Bamfo", title: "Staff Member", focus: "1st Law" },
 ];
 
@@ -47,7 +48,7 @@ export default function Team() {
         </motion.div>
 
         {/* Attorney cards */}
-        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6">
           {attorneys.map((attorney, i) => (
             <motion.div
               key={attorney.name}
