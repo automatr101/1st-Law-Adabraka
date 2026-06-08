@@ -6,6 +6,7 @@ import Principal from "@/components/sections/Principal";
 import PracticeAreas from "@/components/sections/PracticeAreas";
 import WhyUs from "@/components/sections/WhyUs";
 import Team from "@/components/sections/Team";
+import Gallery from "@/components/sections/Gallery";
 import Testimonials from "@/components/sections/Testimonials";
 import Contact from "@/components/sections/Contact";
 import Footer from "@/components/Footer";
@@ -23,6 +24,7 @@ export default function Home() {
       <PracticeAreas />
       <WhyUs />
       <Team />
+      <Gallery />
       <Testimonials />
       <Contact />
       <Footer />

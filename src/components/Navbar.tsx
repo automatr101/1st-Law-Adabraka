@@ -11,6 +11,7 @@ const navLinks = [
   { href: "#about", label: "About", section: "about" },
   { href: "#practice-areas", label: "Practice Areas", section: "practice-areas" },
   { href: "#team", label: "Our Team", section: "team" },
+  { href: "#gallery", label: "Gallery", section: "gallery" },
   { href: "#contact", label: "Contact", section: "contact" },
 ];
 
